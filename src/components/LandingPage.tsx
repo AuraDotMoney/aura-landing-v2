@@ -106,15 +106,12 @@ export default function LandingPage() {
   if (isMobile) {
     return (
       <div className="relative min-h-screen w-full overflow-hidden">
-        {/* Full-bleed background image - mobile optimized version */}
+        {/* Full-bleed background image - mobile optimized version (unoptimized to preserve quality) */}
         <div className="absolute inset-0 overflow-hidden">
-          <Image
+          <img
             src="/background-mobile.png"
             alt=""
-            fill
-            priority
-            className="object-cover"
-            quality={100}
+            className="absolute inset-0 w-full h-full object-cover"
             aria-hidden="true"
           />
         </div>
