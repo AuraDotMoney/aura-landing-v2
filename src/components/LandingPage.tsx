@@ -224,13 +224,15 @@ export default function LandingPage() {
           {/* Subheadline */}
           <motion.p
             variants={mobileItemVariants}
-            className="text-white text-[20px] sm:text-[23px] text-center font-normal mt-1 tracking-wide"
+            className="text-white text-[18px] sm:text-[20px] text-center font-normal mt-1 tracking-wide leading-relaxed"
             style={{
               fontFamily: "'SF Pro', -apple-system, BlinkMacSystemFont, sans-serif",
               textShadow: "0 1px 10px rgba(0,0,0,0.1)",
             }}
           >
-            Perps, sports, politics, &amp; more
+            Farm points and trade perps, stocks, and prediction markets—
+            <br className="hidden sm:block" />
+            all in one place.
           </motion.p>
 
           {/* Spacer */}
@@ -290,6 +292,19 @@ export default function LandingPage() {
             background: "linear-gradient(to bottom, rgba(0,0,0,0.08) 0%, transparent 100%)",
           }}
         />
+
+        {/* Footer */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.6, delay: 0.8 }}
+          className="absolute bottom-4 left-0 right-0 text-center text-white/60 text-[11px] font-normal z-20"
+          style={{
+            fontFamily: "'SF Pro', -apple-system, BlinkMacSystemFont, sans-serif",
+          }}
+        >
+          © 2026 INFINITE AURA PTE LTD
+        </motion.div>
       </div>
     );
   }
@@ -361,17 +376,18 @@ export default function LandingPage() {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: 0.3 }}
-                className="absolute top-[211px] left-[669.5px] -translate-x-1/2 text-white text-[23px] font-normal text-center whitespace-nowrap"
+                className="absolute top-[211px] left-[669.5px] -translate-x-1/2 text-white text-[23px] font-normal text-center"
                 style={{
                   fontFamily: "'SF Pro', -apple-system, BlinkMacSystemFont, sans-serif",
-                  lineHeight: "normal",
+                  lineHeight: "1.4",
                 }}
               >
-                Perps, sports, politics, &amp; more
+                Farm points and trade perps, stocks, and prediction markets—<br />
+                all in one place.
               </motion.p>
 
-              {/* Early Access Button - positioned at left: 594px, top: 266px */}
-              <div className="absolute top-[266px] left-[594px]">
+              {/* Early Access Button - positioned at left: 594px, top: 290px */}
+              <div className="absolute top-[290px] left-[594px]">
                 <a 
                   href="https://t.me/+wCyhe2kIvyc1NjI5"
                   target="_blank"
@@ -398,19 +414,19 @@ export default function LandingPage() {
                 />
               </motion.div>
 
-              {/* Bottom Left Text - "Powered by:" at left: 70px, top: 830px */}
+              {/* Bottom Left Text - at left: 70px, top: 835px (matching right side) */}
               <motion.div
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ duration: 0.6, delay: 0.7 }}
-                className="absolute left-[70px] top-[830px] text-white text-[23px] font-normal whitespace-nowrap"
+                className="absolute left-[70px] top-[835px] text-white text-[23px] font-normal whitespace-nowrap"
                 style={{
                   fontFamily: "'SF Pro', -apple-system, BlinkMacSystemFont, sans-serif",
                   lineHeight: "normal",
                 }}
               >
-                <p className="m-0">Powered by:</p>
-                <p className="m-0">Hyperliquid, Polymarket</p>
+                <p className="m-0">Hyperliquid, Polymarket,</p>
+                <p className="m-0">Extended, &amp; more</p>
               </motion.div>
 
               {/* Bottom Right Text - right-aligned at left: 1270px (from right edge), top: 835px */}
@@ -427,8 +443,22 @@ export default function LandingPage() {
                 <p className="m-0">iOS, Android</p>
                 <p className="m-0">Apple Pay, Google Pay</p>
               </motion.div>
+
             </div>
           </div>
+        </motion.div>
+
+        {/* Footer - in white space below content */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.6, delay: 0.8 }}
+          className="absolute bottom-3 left-1/2 -translate-x-1/2 text-neutral-400 text-[12px] font-normal whitespace-nowrap"
+          style={{
+            fontFamily: "'SF Pro', -apple-system, BlinkMacSystemFont, sans-serif",
+          }}
+        >
+          © 2026 INFINITE AURA PTE LTD
         </motion.div>
     </div>
   );
