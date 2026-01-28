@@ -14,6 +14,7 @@ const MARGIN_PERCENT = 0.025; // 2.5% margin on each side for a tighter fit
 const MIN_SCALE = 0.55; // Minimum scale for tablets (~768px)
 const MAX_SCALE = 2.0; // Scale up for large screens
 const MOBILE_BREAKPOINT = 768; // Below this, show mobile version
+const FOOTER_HEIGHT = 48; // Footer dedicated space (py-4 + text)
 
 // Custom easing curve - punchy ease-out for responsive feel
 const snappyEase = [0.23, 1, 0.32, 1] as const;
@@ -83,11 +84,11 @@ export default function LandingPage() {
       
       setIsMobile(false);
 
-      // Calculate available space after viewport-relative margins
+      // Calculate available space after viewport-relative margins and footer
       const marginX = width * MARGIN_PERCENT;
       const marginY = height * MARGIN_PERCENT;
       const availableWidth = width - (marginX * 2);
-      const availableHeight = height - (marginY * 2);
+      const availableHeight = height - (marginY * 2) - FOOTER_HEIGHT;
       
       // Calculate scale to fit content in available space
       const scaleX = availableWidth / DESIGN_WIDTH;
@@ -115,7 +116,7 @@ export default function LandingPage() {
   // Mobile version - Beautiful full-screen experience
   if (isMobile) {
     return (
-      <div className="relative min-h-screen w-full overflow-hidden">
+      <div className="relative h-screen w-full overflow-hidden flex flex-col">
         {/* Full-bleed background image - mobile optimized version (unoptimized to preserve quality) */}
         <div className="absolute inset-0 overflow-hidden">
           <img
@@ -131,7 +132,7 @@ export default function LandingPage() {
           variants={mobileContainerVariants}
           initial="hidden"
           animate="visible"
-          className="relative z-10 flex flex-col items-center min-h-screen pt-5 px-[40px] pb-0 w-full"
+          className="relative z-10 flex flex-col items-center flex-1 min-h-0 pt-5 px-[40px] pb-0 w-full"
           style={{
             paddingLeft: 'clamp(24px, 10vw, 40px)',
             paddingRight: 'clamp(24px, 10vw, 40px)',
@@ -293,12 +294,12 @@ export default function LandingPage() {
           }}
         />
 
-        {/* Footer */}
+        {/* Footer - dedicated row at bottom */}
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.6, delay: 0.8 }}
-          className="absolute bottom-4 left-0 right-0 text-center text-white/60 text-[11px] font-normal z-20"
+          className="relative z-20 py-4 text-center text-white/60 text-[11px] font-normal shrink-0"
           style={{
             fontFamily: "'SF Pro', -apple-system, BlinkMacSystemFont, sans-serif",
           }}
@@ -310,20 +311,22 @@ export default function LandingPage() {
   }
 
   return (
-    // Outer container fills viewport, centers the content
-    <div className="h-screen w-full overflow-hidden bg-white flex items-center justify-center">
-      {/* Scaling wrapper - sized to fit with proper margins */}
-      <motion.div 
-        initial={{ opacity: 0, scale: 0.98 }}
-        animate={{ opacity: 1, scale: 1 }}
-        transition={{ duration: 0.8, ease: "easeOut" }}
-        className="rounded-[20px] overflow-hidden bg-neutral-700 relative"
-        style={{
-          width: DESIGN_WIDTH * scale,
-          height: DESIGN_HEIGHT * scale,
-          boxShadow: "0px 4px 4px 0px rgba(0, 0, 0, 0.25)",
-        }}
-      >
+    // Outer container fills viewport with flex column layout
+    <div className="h-screen w-full overflow-hidden bg-white flex flex-col">
+      {/* Main content area - centers the scaled container */}
+      <div className="flex-1 flex items-center justify-center min-h-0">
+        {/* Scaling wrapper - sized to fit with proper margins */}
+        <motion.div 
+          initial={{ opacity: 0, scale: 0.98 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.8, ease: "easeOut" }}
+          className="rounded-[20px] overflow-hidden bg-neutral-700 relative"
+          style={{
+            width: DESIGN_WIDTH * scale,
+            height: DESIGN_HEIGHT * scale,
+            boxShadow: "0px 4px 4px 0px rgba(0, 0, 0, 0.25)",
+          }}
+        >
         {/* Inner content at original size, scaled down */}
         <div
           className="relative"
@@ -426,7 +429,7 @@ export default function LandingPage() {
                 }}
               >
                 <p className="m-0">Hyperliquid, Polymarket,</p>
-                <p className="m-0">Extended, &amp; more</p>
+                <p className="m-0">Memecoins, &amp; more</p>
               </motion.div>
 
               {/* Bottom Right Text - right-aligned at left: 1270px (from right edge), top: 835px */}
@@ -447,19 +450,20 @@ export default function LandingPage() {
             </div>
           </div>
         </motion.div>
+      </div>
 
-        {/* Footer - in white space below content */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.6, delay: 0.8 }}
-          className="absolute bottom-3 left-1/2 -translate-x-1/2 text-neutral-400 text-[12px] font-normal whitespace-nowrap"
-          style={{
-            fontFamily: "'SF Pro', -apple-system, BlinkMacSystemFont, sans-serif",
-          }}
-        >
-          © 2026 INFINITE AURA PTE LTD
-        </motion.div>
+      {/* Footer - dedicated row at bottom */}
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.6, delay: 0.8 }}
+        className="py-4 text-center text-neutral-400 text-[12px] font-normal whitespace-nowrap shrink-0"
+        style={{
+          fontFamily: "'SF Pro', -apple-system, BlinkMacSystemFont, sans-serif",
+        }}
+      >
+        © 2026 INFINITE AURA PTE LTD
+      </motion.div>
     </div>
   );
 }
