@@ -4,7 +4,6 @@ import { motion } from "framer-motion";
 import Image from "next/image";
 import { useState, useEffect } from "react";
 import GlassNav from "./GlassNav";
-import GlassButton from "./GlassButton";
 
 // Design dimensions - from Figma (content area only, not including margins)
 const DESIGN_WIDTH = 1340; // Main container width
@@ -138,73 +137,101 @@ export default function LandingPage() {
             paddingRight: 'clamp(24px, 10vw, 40px)',
           }}
         >
-          {/* Glass Navigation Bar - wider, responsive to window size */}
-          <motion.nav
+          {/* Glass Navigation Bar + Launch App Button */}
+          <motion.div
             variants={mobileItemVariants}
-            className="w-full h-[50px] px-5 rounded-full bg-black/5 border border-white/90 backdrop-blur-sm flex items-center gap-2.5"
+            className="w-full flex items-center gap-2.5"
           >
-            {/* Logo */}
-            <motion.a
-              href="#"
-              whileHover={{ scale: 1.02 }}
-              whileTap={{ scale: 0.97 }}
-              transition={buttonTransition}
-              className="flex items-center shrink-0"
+            <motion.nav
+              className="flex-1 h-[50px] px-5 rounded-full bg-black/5 border border-white/90 backdrop-blur-sm flex items-center gap-2.5"
             >
-              <Image
-                src="/logo.svg"
-                alt="Aura"
-                width={91}
-                height={20}
-                priority
-                unoptimized
-                className="h-5 w-[91px] object-contain"
-              />
+              {/* Logo */}
+              <motion.a
+                href="#"
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.97 }}
+                transition={buttonTransition}
+                className="flex items-center shrink-0"
+              >
+                <Image
+                  src="/logo.svg"
+                  alt="Aura"
+                  width={91}
+                  height={20}
+                  priority
+                  unoptimized
+                  className="h-5 w-[91px] object-contain"
+                />
+              </motion.a>
+
+              {/* Spacer */}
+              <div className="flex-1" />
+
+              {/* Social Icons */}
+              <div className="flex items-center gap-2.5">
+                <motion.a
+                  href="https://x.com/Auramoney"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  whileHover={{ scale: 1.08, filter: "brightness(1.1)" }}
+                  whileTap={{ scale: 0.97 }}
+                  transition={buttonTransition}
+                  className="flex items-center justify-center w-[25px] h-[25px]"
+                >
+                  <Image
+                    src="/x.svg"
+                    alt="X"
+                    width={25}
+                    height={25}
+                    unoptimized
+                    className="w-[25px] h-[25px]"
+                  />
+                </motion.a>
+                <motion.a
+                  href="https://t.me/auradotmoney"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  whileHover={{ scale: 1.08, filter: "brightness(1.1)" }}
+                  whileTap={{ scale: 0.97 }}
+                  transition={buttonTransition}
+                  className="flex items-center justify-center w-[25px] h-[25px]"
+                >
+                  <Image
+                    src="/telegram.svg"
+                    alt="Telegram"
+                    width={25}
+                    height={25}
+                    unoptimized
+                    className="w-[25px] h-[25px]"
+                  />
+                </motion.a>
+              </div>
+            </motion.nav>
+
+            {/* Launch App Button - follows Emil Kowalski's animation principles */}
+            <motion.a
+              href="https://app.aura.money"
+              target="_blank"
+              rel="noopener noreferrer"
+              whileHover={{ 
+                scale: 1.02,
+                filter: "brightness(0.95)",
+                boxShadow: "0 0 20px rgba(255, 255, 255, 0.3)",
+              }}
+              whileTap={{ 
+                scale: 0.97, // Magic number from article - subtle but responsive
+                filter: "blur(0.3px) brightness(0.9)", // Blur masks imperfections on press
+              }}
+              transition={buttonTransition}
+              className="h-[50px] px-4 rounded-full bg-white text-black text-[14px] font-medium flex items-center justify-center cursor-pointer shrink-0 whitespace-nowrap"
+              style={{
+                fontFamily: "'SF Pro', -apple-system, BlinkMacSystemFont, sans-serif",
+                willChange: "transform, filter", // Optimize for animations
+              }}
+            >
+              Launch App
             </motion.a>
-
-            {/* Spacer */}
-            <div className="flex-1" />
-
-            {/* Social Icons */}
-            <div className="flex items-center gap-2.5">
-              <motion.a
-                href="https://x.com/Auramoney"
-                target="_blank"
-                rel="noopener noreferrer"
-                whileHover={{ scale: 1.08, filter: "brightness(1.1)" }}
-                whileTap={{ scale: 0.97 }}
-                transition={buttonTransition}
-                className="flex items-center justify-center w-[25px] h-[25px]"
-              >
-                <Image
-                  src="/x.svg"
-                  alt="X"
-                  width={25}
-                  height={25}
-                  unoptimized
-                  className="w-[25px] h-[25px]"
-                />
-              </motion.a>
-              <motion.a
-                href="https://t.me/auradotmoney"
-                target="_blank"
-                rel="noopener noreferrer"
-                whileHover={{ scale: 1.08, filter: "brightness(1.1)" }}
-                whileTap={{ scale: 0.97 }}
-                transition={buttonTransition}
-                className="flex items-center justify-center w-[25px] h-[25px]"
-              >
-                <Image
-                  src="/telegram.svg"
-                  alt="Telegram"
-                  width={25}
-                  height={25}
-                  unoptimized
-                  className="w-[25px] h-[25px]"
-                />
-              </motion.a>
-            </div>
-          </motion.nav>
+          </motion.div>
 
           {/* Spacer - pushes content down */}
           <div className="h-[80px] shrink-0" />
@@ -235,35 +262,6 @@ export default function LandingPage() {
             <br className="hidden sm:block" />
             all in one place.
           </motion.p>
-
-          {/* Spacer */}
-          <div className="h-[30px] shrink-0" />
-
-          {/* CTA Button */}
-          <motion.div variants={mobileItemVariants}>
-            <a
-              href="https://t.me/+wCyhe2kIvyc1NjI5"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <motion.button
-                whileHover={{ 
-                  scale: 1.02,
-                  boxShadow: "0 0 30px rgba(255, 255, 255, 0.25)",
-                }}
-                whileTap={{ scale: 0.97 }}
-                transition={buttonTransition}
-                className="h-[50px] px-8 rounded-full bg-black/5 border border-white/90 backdrop-blur-sm text-white text-[18px] cursor-pointer flex items-center justify-center"
-                style={{
-                  fontFamily: "'SF Pro', -apple-system, BlinkMacSystemFont, sans-serif",
-                  fontWeight: 510,
-                  textShadow: "0 1px 5px rgba(0,0,0,0.1)",
-                }}
-              >
-                Early access
-              </motion.button>
-            </a>
-          </motion.div>
 
           {/* Spacer before phone */}
           <div className="h-[40px] sm:h-[60px] shrink-0" />
@@ -354,9 +352,34 @@ export default function LandingPage() {
 
             {/* Content Layer */}
             <div className="relative z-10 w-full h-full">
-              {/* Top Navigation Bar - positioned at top: 40px, left: 70px */}
-              <div className="absolute top-[40px] left-[70px]">
+              {/* Top Navigation Bar + Launch App Button - positioned at top: 40px, left: 70px */}
+              <div className="absolute top-[40px] left-[70px] right-[70px] flex items-center gap-[10px]">
                 <GlassNav />
+                {/* Launch App Button - follows Emil Kowalski's animation principles */}
+                <motion.a
+                  href="https://app.aura.money"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  initial={{ opacity: 0, y: -20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  whileHover={{ 
+                    scale: 1.02,
+                    filter: "brightness(0.95)",
+                    boxShadow: "0 0 20px rgba(255, 255, 255, 0.3)",
+                  }}
+                  whileTap={{ 
+                    scale: 0.97, // Magic number from article - subtle but responsive
+                    filter: "blur(0.3px) brightness(0.9)", // Blur masks imperfections on press
+                  }}
+                  transition={buttonTransition}
+                  className="h-[50px] px-6 rounded-full bg-white text-black text-[16px] font-medium flex items-center justify-center cursor-pointer shrink-0"
+                  style={{
+                    fontFamily: "'SF Pro', -apple-system, BlinkMacSystemFont, sans-serif",
+                    willChange: "transform, filter", // Optimize for animations
+                  }}
+                >
+                  Launch App
+                </motion.a>
               </div>
 
               {/* Main Heading - centered at left: 670px (50% of 1340), top: 142px */}
@@ -389,16 +412,6 @@ export default function LandingPage() {
                 all in one place.
               </motion.p>
 
-              {/* Early Access Button - positioned at left: 594px, top: 290px */}
-              <div className="absolute top-[290px] left-[594px]">
-                <a 
-                  href="https://t.me/+wCyhe2kIvyc1NjI5"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  <GlassButton>Early access</GlassButton>
-                </a>
-              </div>
 
               {/* iPhone Mockup - positioned at left: 464px, top: 374px, size: 411x840 */}
               <motion.div
