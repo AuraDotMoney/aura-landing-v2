@@ -137,101 +137,73 @@ export default function LandingPage() {
             paddingRight: 'clamp(24px, 10vw, 40px)',
           }}
         >
-          {/* Glass Navigation Bar + Launch App Button */}
-          <motion.div
+          {/* Glass Navigation Bar */}
+          <motion.nav
             variants={mobileItemVariants}
-            className="w-full flex items-center gap-2.5"
+            className="w-full h-[50px] px-5 rounded-full bg-black/5 border border-white/90 backdrop-blur-sm flex items-center gap-2.5"
           >
-            <motion.nav
-              className="flex-1 h-[50px] px-5 rounded-full bg-black/5 border border-white/90 backdrop-blur-sm flex items-center gap-2.5"
+            {/* Logo */}
+            <motion.a
+              href="#"
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.97 }}
+              transition={buttonTransition}
+              className="flex items-center shrink-0"
             >
-              {/* Logo */}
+              <Image
+                src="/logo.svg"
+                alt="Aura"
+                width={91}
+                height={20}
+                priority
+                unoptimized
+                className="h-5 w-[91px] object-contain"
+              />
+            </motion.a>
+
+            {/* Spacer */}
+            <div className="flex-1" />
+
+            {/* Social Icons */}
+            <div className="flex items-center gap-2.5">
               <motion.a
-                href="#"
-                whileHover={{ scale: 1.02 }}
+                href="https://x.com/Auramoney"
+                target="_blank"
+                rel="noopener noreferrer"
+                whileHover={{ scale: 1.08, filter: "brightness(1.1)" }}
                 whileTap={{ scale: 0.97 }}
                 transition={buttonTransition}
-                className="flex items-center shrink-0"
+                className="flex items-center justify-center w-[25px] h-[25px]"
               >
                 <Image
-                  src="/logo.svg"
-                  alt="Aura"
-                  width={91}
-                  height={20}
-                  priority
+                  src="/x.svg"
+                  alt="X"
+                  width={25}
+                  height={25}
                   unoptimized
-                  className="h-5 w-[91px] object-contain"
+                  className="w-[25px] h-[25px]"
                 />
               </motion.a>
-
-              {/* Spacer */}
-              <div className="flex-1" />
-
-              {/* Social Icons */}
-              <div className="flex items-center gap-2.5">
-                <motion.a
-                  href="https://x.com/Auramoney"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  whileHover={{ scale: 1.08, filter: "brightness(1.1)" }}
-                  whileTap={{ scale: 0.97 }}
-                  transition={buttonTransition}
-                  className="flex items-center justify-center w-[25px] h-[25px]"
-                >
-                  <Image
-                    src="/x.svg"
-                    alt="X"
-                    width={25}
-                    height={25}
-                    unoptimized
-                    className="w-[25px] h-[25px]"
-                  />
-                </motion.a>
-                <motion.a
-                  href="https://t.me/auradotmoney"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  whileHover={{ scale: 1.08, filter: "brightness(1.1)" }}
-                  whileTap={{ scale: 0.97 }}
-                  transition={buttonTransition}
-                  className="flex items-center justify-center w-[25px] h-[25px]"
-                >
-                  <Image
-                    src="/telegram.svg"
-                    alt="Telegram"
-                    width={25}
-                    height={25}
-                    unoptimized
-                    className="w-[25px] h-[25px]"
-                  />
-                </motion.a>
-              </div>
-            </motion.nav>
-
-            {/* Launch App Button - follows Emil Kowalski's animation principles */}
-            <motion.a
-              href="https://app.aura.money"
-              target="_blank"
-              rel="noopener noreferrer"
-              whileHover={{ 
-                scale: 1.02,
-                filter: "brightness(0.95)",
-                boxShadow: "0 0 20px rgba(255, 255, 255, 0.3)",
-              }}
-              whileTap={{ 
-                scale: 0.97, // Magic number from article - subtle but responsive
-                filter: "blur(0.3px) brightness(0.9)", // Blur masks imperfections on press
-              }}
-              transition={buttonTransition}
-              className="h-[50px] px-4 rounded-full bg-white text-black text-[14px] font-medium flex items-center justify-center cursor-pointer shrink-0 whitespace-nowrap"
-              style={{
-                fontFamily: "'SF Pro', -apple-system, BlinkMacSystemFont, sans-serif",
-                willChange: "transform, filter", // Optimize for animations
-              }}
-            >
-              Launch App
-            </motion.a>
-          </motion.div>
+              <motion.a
+                href="https://t.me/auradotmoney"
+                target="_blank"
+                rel="noopener noreferrer"
+                whileHover={{ scale: 1.08, filter: "brightness(1.1)" }}
+                whileTap={{ scale: 0.97 }}
+                transition={buttonTransition}
+                className="flex items-center justify-center w-[25px] h-[25px]"
+              >
+                <Image
+                  src="/telegram.svg"
+                  alt="Telegram"
+                  width={25}
+                  height={25}
+                  unoptimized
+                  className="w-[25px] h-[25px]"
+                />
+              </motion.a>
+            </div>
+          </motion.nav>
 
           {/* Spacer - pushes content down */}
           <div className="h-[80px] shrink-0" />
