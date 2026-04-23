@@ -40,3 +40,8 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 .env*.local
+
+# lockfiles for package managers we don't use
+pnpm-lock.yaml
+yarn.lock
+bun.lockb

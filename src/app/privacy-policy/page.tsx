@@ -1,15 +1,13 @@
+import LegalLayout from "@/components/LegalLayout";
+
 export default function PrivacyPolicy() {
 	return (
-		<div className="min-h-screen bg-[#f5f5f5] py-5 px-5">
-			<div className="max-w-[800px] mx-auto bg-white p-10 md:p-5 rounded-lg shadow-[0_2px_10px_rgba(0,0,0,0.1)]">
-				<h1 className="text-[2.5em] md:text-[2em] mb-5 text-[#2c3e50]">
-					AURA PRIVACY POLICY
-				</h1>
-
-				<p className="font-bold mb-5 text-[#7f8c8d]">
-					Last updated: 18 November 2025
-				</p>
-
+		<LegalLayout
+			eyebrow="Legal"
+			title="Privacy Policy"
+			updated="18 November 2025"
+		>
+			<>
 				<p className="mb-4">
 					We recognise our responsibilities in relation to the collection,
 					holding, processing, use and/or transfer of personal data. Your
@@ -739,7 +737,7 @@ export default function PrivacyPolicy() {
 					Website following the posting of changes to this Policy will be deemed
 					your acceptance of those changes.
 				</p>
-			</div>
-		</div>
+			</>
+		</LegalLayout>
 	);
 }
