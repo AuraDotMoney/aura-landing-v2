@@ -3,11 +3,13 @@ import { NextResponse } from "next/server";
 export const revalidate = 20;
 
 export async function GET() {
-  const url = new URL("https://gamma-api.polymarket.com/markets");
+  // Matches what trade.aura.money's Predictions → Trending surfaces: events
+  // (grouped multi-outcome markets) sorted by 24h volume.
+  const url = new URL("https://gamma-api.polymarket.com/events");
   url.searchParams.set("active", "true");
   url.searchParams.set("closed", "false");
   url.searchParams.set("archived", "false");
-  url.searchParams.set("limit", "30");
+  url.searchParams.set("limit", "20");
   url.searchParams.set("order", "volume24hr");
   url.searchParams.set("ascending", "false");
 

@@ -7,9 +7,14 @@ export type HLTicker = {
 };
 
 export type PMMarket = {
-  question: string;
-  yesPrice: number;
+  /** Event title (e.g. "2028 Democratic Presidential Nominee") */
+  title: string;
+  /** Event slug used to build /predictions/event/{slug} */
   slug: string;
+  /** Label for the leading outcome: "Yes" for binary events, candidate name for multi */
+  leadLabel: string;
+  /** Leading outcome probability, 0–100 (rounded, integer) */
+  leadPercent: number;
 };
 
 export async function fetchHyperliquid(
@@ -20,38 +25,67 @@ export async function fetchHyperliquid(
   return (await res.json()) as HLTicker[];
 }
 
+type PMEventRaw = {
+  title: string;
+  slug: string;
+  markets?: Array<{
+    question?: string;
+    groupItemTitle?: string;
+    outcomePrices?: string | string[];
+  }>;
+};
+
+function parsePrices(value: unknown): number[] | null {
+  let v = value;
+  if (typeof v === "string") {
+    try {
+      v = JSON.parse(v);
+    } catch {
+      return null;
+    }
+  }
+  if (!Array.isArray(v)) return null;
+  const nums = v.map((x) => Number(x));
+  if (nums.some((n) => !Number.isFinite(n))) return null;
+  return nums;
+}
+
 export async function fetchPolymarket(
   signal?: AbortSignal
 ): Promise<PMMarket[]> {
   const res = await fetch("/api/markets/pm", { signal });
   if (!res.ok) throw new Error(`PM ${res.status}`);
-  const data = (await res.json()) as Array<{
-    question: string;
-    outcomePrices: string | string[];
-    outcomes?: string | string[];
-    slug: string;
-  }>;
+  const data = (await res.json()) as PMEventRaw[];
 
+  // /events is already sorted by volume24hr desc, so we just take the top 4.
+  // For each event, find the leading outcome across its child markets: binary
+  // events use "Yes" + their single market's probability; multi-outcome events
+  // use the top candidate's groupItemTitle + probability.
   const out: PMMarket[] = [];
-  for (const m of data) {
+  for (const e of data) {
     if (out.length >= 4) break;
-    let prices: unknown = m.outcomePrices;
-    if (typeof prices === "string") {
-      try {
-        prices = JSON.parse(prices);
-      } catch {
-        continue;
-      }
+    if (!e.title || !e.slug || !e.markets?.length) continue;
+
+    const binary = e.markets.length === 1;
+    let lead: { label: string; price: number } | null = null;
+
+    for (const m of e.markets) {
+      const prices = parsePrices(m.outcomePrices);
+      if (!prices || prices.length === 0) continue;
+      const yes = prices[0];
+      const label = binary
+        ? "Yes"
+        : (m.groupItemTitle?.trim() || m.question?.trim() || "").slice(0, 40);
+      if (!label) continue;
+      if (lead === null || yes > lead.price) lead = { label, price: yes };
     }
-    if (!Array.isArray(prices) || prices.length === 0) continue;
-    const yesPrice = Number(prices[0]);
-    // Only skip fully-resolved markets (exactly 0 or 1). Everything else is real live data.
-    if (!Number.isFinite(yesPrice) || yesPrice <= 0.005 || yesPrice >= 0.995) continue;
-    if (!m.question || !m.slug) continue;
+
+    if (!lead) continue;
     out.push({
-      question: m.question,
-      yesPrice,
-      slug: m.slug,
+      title: e.title,
+      slug: e.slug,
+      leadLabel: lead.label,
+      leadPercent: Math.round(lead.price * 100),
     });
   }
   return out;
@@ -59,14 +93,18 @@ export async function fetchPolymarket(
 
 const BASE = "https://trade.aura.money";
 
-// TODO: wire deep-links once the trade.aura.money URL scheme is confirmed.
-// For now all market rows send users to the app's entry point.
-export function hlTradeUrl(_symbol: string): string {
-  return BASE;
+// URL scheme (from aura-frontend packages/core/src/utils/trade-url.ts):
+// - perps:  /trade/BTC
+// - HIP-3:  /trade/xyz:CL  (dex prefix + ":" + symbol, preserved verbatim)
+// - PM:     /predictions/event/{market-slug}
+export function hlTradeUrl(symbol: string): string {
+  if (!symbol) return BASE;
+  return `${BASE}/trade/${encodeURIComponent(symbol)}`;
 }
 
-export function pmTradeUrl(_slug: string): string {
-  return BASE;
+export function pmTradeUrl(slug: string): string {
+  if (!slug) return BASE;
+  return `${BASE}/predictions/event/${encodeURIComponent(slug)}`;
 }
 
 export function fmtPrice(n: number): string {

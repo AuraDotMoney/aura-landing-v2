@@ -10,24 +10,31 @@ const instrumentSerif = Instrument_Serif({
   display: "swap",
 });
 
+const SITE_TITLE = "Aura — Trade Hyperliquid & Polymarket in one app";
+const SITE_DESCRIPTION =
+  "The fastest, cheapest way to trade Hyperliquid perps, spot, HIP-3 markets and Polymarket predictions. One wallet, lowest fees — on iOS, Android, and desktop.";
+
 export const metadata: Metadata = {
   metadataBase: new URL("https://aura.money"),
-  title: "Aura — Trade everything",
-  description:
-    "One app for perps, prediction markets, and everything in between. Hyperliquid and Polymarket, one wallet, lowest fees.",
+  title: SITE_TITLE,
+  description: SITE_DESCRIPTION,
+  applicationName: "Aura",
+  alternates: {
+    canonical: "/",
+  },
   openGraph: {
-    title: "Aura — Trade everything",
-    description:
-      "One app for perps, prediction markets, and everything in between. Hyperliquid and Polymarket, one wallet, lowest fees.",
+    title: SITE_TITLE,
+    description: SITE_DESCRIPTION,
     url: "https://aura.money",
     siteName: "Aura",
     type: "website",
+    locale: "en_US",
   },
   twitter: {
-    card: "summary_large_image",
-    title: "Aura — Trade everything",
+    card: "summary",
+    title: SITE_TITLE,
     description:
-      "One app for perps, prediction markets, and everything in between.",
+      "Trade Hyperliquid and Polymarket from one app. Lowest fees, on every device.",
     site: "@auramoney",
     creator: "@auramoney",
   },
@@ -41,6 +48,15 @@ export const metadata: Metadata = {
   },
 };
 
+const organizationJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  name: "Aura",
+  url: "https://aura.money",
+  logo: "https://aura.money/logo.svg",
+  sameAs: ["https://x.com/auramoney", "https://t.me/auradotmoney"],
+};
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -48,7 +64,13 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={instrumentSerif.variable}>
-      <body className="antialiased">{children}</body>
+      <body className="antialiased">
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationJsonLd) }}
+        />
+        {children}
+      </body>
     </html>
   );
 }

@@ -23,10 +23,10 @@ const FALLBACK_HL: HLTicker[] = [
 ];
 
 const FALLBACK_PM: PMMarket[] = [
-  { question: "2028 US Presidential winner", yesPrice: 0.52, slug: "" },
-  { question: "Fed cuts rates in Q3", yesPrice: 0.68, slug: "" },
-  { question: "BTC > $100k by year end", yesPrice: 0.43, slug: "" },
-  { question: "Champions League winner", yesPrice: 0.31, slug: "" },
+  { title: "2028 Presidential Election Winner", slug: "", leadLabel: "JD Vance", leadPercent: 39 },
+  { title: "2026 NBA Champion", slug: "", leadLabel: "OKC Thunder", leadPercent: 52 },
+  { title: "Fed decision in April?", slug: "", leadLabel: "No change", leadPercent: 99 },
+  { title: "2026 FIFA World Cup Winner", slug: "", leadLabel: "France", leadPercent: 17 },
 ];
 
 function usePoll<T>(
@@ -151,23 +151,22 @@ function HLRow({ t }: { t: HLTicker }) {
 }
 
 function PMRow({ m }: { m: PMMarket }) {
-  const cents = Math.round(m.yesPrice * 100);
   return (
     <a
       href={pmTradeUrl(m.slug)}
       target="_blank"
       rel="noopener noreferrer"
-      title={m.question}
+      title={`${m.title} — ${m.leadLabel} ${m.leadPercent}%`}
       className="group flex items-center gap-4 px-4 py-3.5 min-h-[48px] transition-colors duration-200 hover:bg-white/[0.05] active:bg-white/[0.1]"
     >
       <span className="flex-1 min-w-0 text-white text-[13px] leading-tight truncate">
-        {m.question}
+        {m.title}
       </span>
-      <span className="text-[11px] uppercase tracking-[0.14em] text-white/60 shrink-0">
-        Yes
+      <span className="text-[11px] uppercase tracking-[0.14em] text-white/60 shrink-0 max-w-[140px] truncate">
+        {m.leadLabel}
       </span>
-      <span className="text-white text-[14px] tabular font-medium min-w-[38px] text-right shrink-0">
-        {cents}¢
+      <span className="text-white text-[14px] tabular font-medium min-w-[42px] text-right shrink-0">
+        {m.leadPercent}%
       </span>
       <RowArrow />
     </a>
@@ -216,8 +215,8 @@ export default function Markets() {
               The Hyperliquid universe.
             </h3>
             <p className="text-white/75 text-[14px] leading-relaxed mb-6">
-              Perps and spot today. Prediction markets soon. At native
-              Hyperliquid prices.
+              Perps, spot, and HIP-3 markets today — HIP-4 prediction markets
+              soon. At native Hyperliquid prices.
             </p>
             <div className="rounded-2xl border border-white/15 divide-y divide-white/10 overflow-hidden">
               {hl.map((t) => (
@@ -241,7 +240,7 @@ export default function Markets() {
             </p>
             <div className="rounded-2xl border border-white/15 divide-y divide-white/10 overflow-hidden">
               {pm.map((m, i) => (
-                <PMRow key={m.slug || `pm-${i}`} m={m} />
+                <PMRow key={m.slug || `pm-fallback-${i}`} m={m} />
               ))}
             </div>
           </GlassCard>

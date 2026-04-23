@@ -98,6 +98,17 @@ export default function FooterCTA() {
           </div>
 
           <nav className="flex flex-wrap items-center gap-x-6 gap-y-2 text-[13px] text-white/75">
+            <a
+              href="https://docs.aura.money"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hover:text-white transition-colors"
+            >
+              Docs
+            </a>
+            <Link href="/support" className="hover:text-white transition-colors">
+              Support
+            </Link>
             <Link
               href="/privacy-policy"
               className="hover:text-white transition-colors"
@@ -109,9 +120,6 @@ export default function FooterCTA() {
               className="hover:text-white transition-colors"
             >
               Terms
-            </Link>
-            <Link href="/support" className="hover:text-white transition-colors">
-              Support
             </Link>
           </nav>
         </div>
