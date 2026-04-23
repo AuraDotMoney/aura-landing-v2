@@ -1,17 +1,13 @@
+import LegalLayout from "@/components/LegalLayout";
+
 export default function TermsOfService() {
 	return (
-		<div className="min-h-screen bg-[#f5f5f5] py-5 px-5">
-			<div className="max-w-[800px] mx-auto bg-white p-10 md:p-5 rounded-lg shadow-[0_2px_10px_rgba(0,0,0,0.1)]">
-				<h1 className="text-[2.5em] md:text-[2em] mb-5 text-[#2c3e50]">
-					Aura.money
-					<br />
-					Terms of Service
-				</h1>
-
-				<p className="font-bold mb-5 text-[#7f8c8d]">
-					Last updated: 18 November 2025
-				</p>
-
+		<LegalLayout
+			eyebrow="Legal"
+			title="Terms of Service"
+			updated="18 November 2025"
+		>
+			<>
 				<p className="mb-4">
 					Aura is a non-custodial visual user interface (the "
 					<strong className="text-[#2c3e50]">App</strong>") which allows users
@@ -1444,7 +1440,7 @@ export default function TermsOfService() {
 					prevail. You acknowledge that you have read and understood the English
 					language version of these Terms.
 				</p>
-			</div>
-		</div>
+			</>
+		</LegalLayout>
 	);
 }
