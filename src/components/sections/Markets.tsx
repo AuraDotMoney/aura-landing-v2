@@ -1,6 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
+import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 import SectionShell, { revealItem } from "../ui/SectionShell";
 import GlassCard from "../ui/GlassCard";
@@ -75,10 +76,28 @@ function usePriceFlash(value: number) {
   return flash;
 }
 
-function Wordmark({ name }: { name: string }) {
+function Wordmark({
+  name,
+  logoSrc,
+}: {
+  name: string;
+  logoSrc: string;
+}) {
   return (
-    <span className="text-[11px] sm:text-[12px] font-semibold tracking-[0.28em] uppercase text-white/80">
-      {name}
+    <span className="flex items-center gap-2.5">
+      <span className="flex items-center justify-center w-7 h-7 rounded-lg bg-white/10 border border-white/15 overflow-hidden shrink-0">
+        <Image
+          src={logoSrc}
+          alt=""
+          width={28}
+          height={28}
+          unoptimized
+          className="w-full h-full object-contain"
+        />
+      </span>
+      <span className="text-[11px] sm:text-[12px] font-semibold tracking-[0.28em] uppercase text-white/80">
+        {name}
+      </span>
     </span>
   );
 }
@@ -208,7 +227,7 @@ export default function Markets() {
         <motion.div variants={revealItem}>
           <GlassCard tone="default" padding="lg" interactive className="h-full">
             <div className="flex items-center justify-between mb-6">
-              <Wordmark name="Hyperliquid" />
+              <Wordmark name="Hyperliquid" logoSrc="/logo-hyperliquid.png" />
               <LivePill stale={hlStale} />
             </div>
             <h3 className="text-white text-[22px] sm:text-[26px] tracking-tight leading-[1.15] mb-1">
@@ -229,7 +248,7 @@ export default function Markets() {
         <motion.div variants={revealItem}>
           <GlassCard tone="default" padding="lg" interactive className="h-full">
             <div className="flex items-center justify-between mb-6">
-              <Wordmark name="Polymarket" />
+              <Wordmark name="Polymarket" logoSrc="/logo-polymarket.png" />
               <LivePill stale={pmStale} />
             </div>
             <h3 className="text-white text-[22px] sm:text-[26px] tracking-tight leading-[1.15] mb-1">
