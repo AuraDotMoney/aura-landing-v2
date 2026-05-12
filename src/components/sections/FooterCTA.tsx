@@ -124,7 +124,19 @@ export default function FooterCTA() {
           </nav>
         </div>
 
-        <p className="mt-8 text-[11px] uppercase tracking-[0.22em] text-white/55">
+        <p className="mt-8 text-[12px] text-white/60">
+          Charts powered by{" "}
+          <a
+            href="https://www.tradingview.com"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-white/85 hover:text-white transition-colors"
+          >
+            TradingView
+          </a>
+          .
+        </p>
+        <p className="mt-2 text-[11px] uppercase tracking-[0.22em] text-white/55">
           © 2026 Infinite Aura Pte Ltd
         </p>
       </SectionShell>

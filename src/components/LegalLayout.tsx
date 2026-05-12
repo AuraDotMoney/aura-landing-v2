@@ -59,38 +59,52 @@ export default function LegalLayout({
               {children}
             </motion.article>
 
-            <footer className="mt-12 pt-8 border-t border-white/15 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-5">
-              <Link href="/" className="flex items-center opacity-90 hover:opacity-100 transition-opacity">
-                <Image
-                  src="/logo.svg"
-                  alt="Aura"
-                  width={91}
-                  height={20}
-                  unoptimized
-                  className="h-5 w-[91px] object-contain"
-                />
-              </Link>
-              <nav className="flex flex-wrap items-center gap-x-6 gap-y-2 text-[13px] text-white/75">
+            <footer className="mt-12 pt-8 border-t border-white/15">
+              <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-5">
+                <Link href="/" className="flex items-center opacity-90 hover:opacity-100 transition-opacity">
+                  <Image
+                    src="/logo.svg"
+                    alt="Aura"
+                    width={91}
+                    height={20}
+                    unoptimized
+                    className="h-5 w-[91px] object-contain"
+                  />
+                </Link>
+                <nav className="flex flex-wrap items-center gap-x-6 gap-y-2 text-[13px] text-white/75">
+                  <a
+                    href="https://docs.aura.money"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="hover:text-white transition-colors"
+                  >
+                    Docs
+                  </a>
+                  <Link href="/support" className="hover:text-white transition-colors">
+                    Support
+                  </Link>
+                  <Link href="/privacy-policy" className="hover:text-white transition-colors">
+                    Privacy
+                  </Link>
+                  <Link href="/terms-of-service" className="hover:text-white transition-colors">
+                    Terms
+                  </Link>
+                </nav>
+                <p className="text-[11px] uppercase tracking-[0.22em] text-white/55">
+                  © 2026 Infinite Aura Pte Ltd
+                </p>
+              </div>
+              <p className="mt-6 text-[12px] text-white/60">
+                Charts powered by{" "}
                 <a
-                  href="https://docs.aura.money"
+                  href="https://www.tradingview.com"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="hover:text-white transition-colors"
+                  className="text-white/85 hover:text-white transition-colors"
                 >
-                  Docs
+                  TradingView
                 </a>
-                <Link href="/support" className="hover:text-white transition-colors">
-                  Support
-                </Link>
-                <Link href="/privacy-policy" className="hover:text-white transition-colors">
-                  Privacy
-                </Link>
-                <Link href="/terms-of-service" className="hover:text-white transition-colors">
-                  Terms
-                </Link>
-              </nav>
-              <p className="text-[11px] uppercase tracking-[0.22em] text-white/55">
-                © 2026 Infinite Aura Pte Ltd
+                .
               </p>
             </footer>
           </div>
